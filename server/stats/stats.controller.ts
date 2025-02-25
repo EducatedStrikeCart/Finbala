@@ -4,8 +4,13 @@ import express from "express";
 
 const log: debug.IDebugger = debug("app:stats-controller");
 class StatsController {
+    async listStats(req: express.Request, res: express.Response) {
+        const stats = await StatsService.list();
+        res.status(200).send(stats);
+    }
+
     async getStatById(req: express.Request, res: express.Response) {
-        const stats = await StatsService.readById(req.body.id);
+        const stats = await StatsService.readById(req.params.id);
         res.status(200).send(stats);
     }
 

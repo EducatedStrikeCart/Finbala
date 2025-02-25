@@ -1,5 +1,8 @@
+import debug from "debug";
 import { CRUD } from "../common/interfaces/crud.interface";
 import StatsDao from "./stats.dao";
+
+const log: debug.IDebugger = debug("app:stats-dao");
 
 class StatsService implements CRUD {
     // Create

@@ -1,9 +1,11 @@
-import ValidationMiddleware from "../common/middlewares/query.validation.middleware";
 import StatsController from "../stats/stats.controller";
 import { CommonRoutesConfig } from "../common/interfaces/common.routes.config";
 import express from "express";
-import { body, checkExact, query } from "express-validator";
-import BodyValidationMiddleware from "../common/middlewares/body.validation.middleware";
+import { body, param, validationResult } from "express-validator";
+
+const myValidationResult = validationResult.withDefaults({
+    formatter: (error) => error.msg,
+});
 
 export class StatRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
@@ -13,28 +15,88 @@ export class StatRoutes extends CommonRoutesConfig {
     configureRoutes(): express.Application {
         this.app
             .route("/stats/")
-            .get(query("id").isNumeric(), StatsController.getStatById)
-            .post(StatsController.createStat);
+            .get(StatsController.listStats)
+            .post(
+                body("type").notEmpty().withMessage("Type cannot be empty"),
+                body("displayName")
+                    .notEmpty()
+                    .withMessage("Display name cannot be empty"),
+                body("date").notEmpty().withMessage("Date Cannot be empty"),
+                (req, res) => {
+                    const err = myValidationResult(req);
+                    if (!err.isEmpty()) {
+                        console.log(err);
+                        res.status(400).send(err.mapped());
+                    } else {
+                        StatsController.createStat(req, res);
+                    }
+                }
+            );
 
         this.app
             .route("/stats/:id")
             .get(
-                body().notEmpty(),
-                body("id").notEmpty(),
-                body("id").isNumeric(),
-                StatsController.getStatById
+                param("id").isHexadecimal().withMessage("Invalid format"),
+                param("id")
+                    .isLength({ min: 24, max: 24 })
+                    .withMessage("Invalid id length"),
+                (req, res) => {
+                    const err = myValidationResult(req);
+                    if (!err.isEmpty()) {
+                        console.log(err);
+                        res.status(404).send(err.mapped());
+                    } else {
+                        StatsController.getStatById(req, res);
+                    }
+                }
             )
             .put(
-                body().notEmpty(),
-                BodyValidationMiddleware.verifyStatBodyFieldErrors,
-                StatsController.putStat
+                body("type").notEmpty().withMessage("Type cannot be empty"),
+                body("displayName")
+                    .notEmpty()
+                    .withMessage("Display name cannot be empty"),
+                body("date").notEmpty().withMessage("Date Cannot be empty"),
+                (req, res) => {
+                    const err = myValidationResult(req);
+                    if (!err.isEmpty()) {
+                        console.log(err);
+                        res.status(400).send(err.mapped());
+                    } else {
+                        StatsController.putStat(req, res);
+                    }
+                }
             )
             .patch(
-                body().notEmpty(),
-                BodyValidationMiddleware.verifyStatBodyFieldErrors,
-                StatsController.patchStat
+                body("type").notEmpty().withMessage("Type cannot be empty"),
+                body("displayName")
+                    .notEmpty()
+                    .withMessage("Display name cannot be empty"),
+                body("date").notEmpty().withMessage("Date Cannot be empty"),
+                (req, res) => {
+                    const err = myValidationResult(req);
+                    if (!err.isEmpty()) {
+                        console.log(err);
+                        res.status(400).send(err.mapped());
+                    } else {
+                        StatsController.patchStat(req, res);
+                    }
+                }
             )
-            .delete(StatsController.deleteStat);
+            .delete(
+                param("id").isHexadecimal().withMessage("Invalid format"),
+                param("id")
+                    .isLength({ min: 24, max: 24 })
+                    .withMessage("Invalid id length"),
+                (req, res) => {
+                    const err = myValidationResult(req);
+                    if (!err.isEmpty()) {
+                        console.log(err);
+                        res.status(404).send(err.mapped());
+                    } else {
+                        StatsController.deleteStat(req, res);
+                    }
+                }
+            );
 
         return this.app;
     }

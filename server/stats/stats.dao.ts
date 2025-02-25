@@ -38,14 +38,6 @@ class StatsDao {
         }
     }
 
-    async getStatByNpi(statNpi: string) {
-        try {
-            return this.Stat.find({ npi: statNpi }).select("-__v").exec();
-        } catch (error) {
-            log(error);
-        }
-    }
-
     async getStatById(statId: string) {
         try {
             return this.Stat.findById(statId).select("-__v").exec();
