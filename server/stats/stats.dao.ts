@@ -23,7 +23,6 @@ class StatsDao {
 
     async addStat(statFields: any) {
         try {
-            console.log(statFields.date, typeof statFields.date);
             const stat = new this.Stat({
                 ...statFields,
                 date: statFields.date ? statFields.date : undefined,
