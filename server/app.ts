@@ -8,6 +8,7 @@ const app = express();
 
 app.use(helmet());
 app.use(cors());
+app.use(express.json())
 app.disable('x-powered-by')
 
 const app_v1: express.Application = express();
