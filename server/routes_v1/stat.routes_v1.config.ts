@@ -51,6 +51,10 @@ export class StatRoutes extends CommonRoutesConfig {
                 }
             )
             .put(
+                param("id").isHexadecimal().withMessage("Invalid format"),
+                param("id")
+                    .isLength({ min: 24, max: 24 })
+                    .withMessage("Invalid id length"),
                 body("type").notEmpty().withMessage("Type cannot be empty"),
                 body("displayName")
                     .notEmpty()
@@ -67,11 +71,10 @@ export class StatRoutes extends CommonRoutesConfig {
                 }
             )
             .patch(
-                body("type").notEmpty().withMessage("Type cannot be empty"),
-                body("displayName")
-                    .notEmpty()
-                    .withMessage("Display name cannot be empty"),
-                body("amount").notEmpty().withMessage("Amount cannot be empty"),
+                param("id").isHexadecimal().withMessage("Invalid format"),
+                param("id")
+                    .isLength({ min: 24, max: 24 })
+                    .withMessage("Invalid id length"),
                 (req, res) => {
                     const err = myValidationResult(req);
                     if (!err.isEmpty()) {
