@@ -1,10 +1,13 @@
+import { Link } from "react-router";
+
 const MainWindow = () => {
     return (
         <div
             id="main-window"
-            className="container-fluid py-5"
+           
             aria-label="Main window"
         >
+            <Link to={"/transactions"}>Transaction</Link>
             <div className="container">
                 <h1>Filler</h1>
                 <p>

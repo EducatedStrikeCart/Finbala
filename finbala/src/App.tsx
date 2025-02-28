@@ -1,15 +1,11 @@
 import "./App.css";
-import { MainWindow } from "./components/layout/MainWindow/MainWindow";
-import { Footer } from "./components/layout/Footer/Footer";
-import { NavBar } from "./components/layout/NavBar/NavBar";
+import { ReactNode } from "react";
 
-function App() {
+function App(props: {children: ReactNode}) {
     return (
-        <>
-                <NavBar />
-                <MainWindow />
-                <Footer />
-        </>
+        <div  className="container-fluid py-5">
+            {props.children}
+        </div>
     );
 }
 
