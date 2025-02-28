@@ -12,28 +12,26 @@ class StatsDao {
 
     Schema = MongooseService.getMongoose().Schema;
 
-    statsSchema = new this.Schema(
-        {
-            id: String, 
-            type: String, // Income or expense
-            displayName: String, // Name to be displayed to users
-            date: Date,
-            
-        }
-    );
+    statsSchema = new this.Schema({
+        type: String, // Income or expense
+        displayName: String, // Name to be displayed to users
+        date: { type: Date, default: Date.now },
+        amount: Number,
+    });
 
     Stat = MongooseService.getMongoose().model("Stats", this.statsSchema);
 
     async addStat(statFields: any) {
         try {
+            console.log(statFields.date, typeof statFields.date);
             const stat = new this.Stat({
                 ...statFields,
+                date: statFields.date ? statFields.date : undefined,
             });
-
             await stat.save();
-            return `Added #${statFields.npi} : ${statFields.displayName}`;
+            return `Added #: ${statFields.displayName}`;
         } catch (error) {
-            log(error);
+            console.log(error);
             return `Internal server error`;
         }
     }

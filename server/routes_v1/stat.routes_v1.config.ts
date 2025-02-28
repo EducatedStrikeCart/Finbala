@@ -21,7 +21,7 @@ export class StatRoutes extends CommonRoutesConfig {
                 body("displayName")
                     .notEmpty()
                     .withMessage("Display name cannot be empty"),
-                body("date").notEmpty().withMessage("Date Cannot be empty"),
+                body("amount").notEmpty().withMessage("Amount Cannot be empty"),
                 (req, res) => {
                     const err = myValidationResult(req);
                     if (!err.isEmpty()) {
@@ -55,7 +55,7 @@ export class StatRoutes extends CommonRoutesConfig {
                 body("displayName")
                     .notEmpty()
                     .withMessage("Display name cannot be empty"),
-                body("date").notEmpty().withMessage("Date Cannot be empty"),
+                body("amount").notEmpty().withMessage("Amount cannot be empty"),
                 (req, res) => {
                     const err = myValidationResult(req);
                     if (!err.isEmpty()) {
@@ -71,7 +71,7 @@ export class StatRoutes extends CommonRoutesConfig {
                 body("displayName")
                     .notEmpty()
                     .withMessage("Display name cannot be empty"),
-                body("date").notEmpty().withMessage("Date Cannot be empty"),
+                body("amount").notEmpty().withMessage("Amount cannot be empty"),
                 (req, res) => {
                     const err = myValidationResult(req);
                     if (!err.isEmpty()) {
