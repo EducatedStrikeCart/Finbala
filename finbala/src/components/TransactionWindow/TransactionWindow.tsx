@@ -19,8 +19,8 @@ export const TransactionWindow = () => {
     }, []);
 
     return (
-        <>
-            <div className="d-flex bg-body-secondary rounded">
+        <div className="bg-body-secondary rounded mx-5 p-3">
+            <div className="d-flex mx-5">
                 <div className="p-2 col-2">Date</div>
                 <div className="p-2 col-2">Type</div>
                 <div className="p-2 col-2">Name</div>
@@ -39,18 +39,7 @@ export const TransactionWindow = () => {
                       />
                   ))
                 : null}
-
-            {/* {Array.from({ length: testData.length }, (_, i) => (
-                <Transaction
-                    key={i}
-                    id={testData[i].id}
-                    type={testData[i].type}
-                    displayName={testData[i].displayName}
-                    amount={testData[i].amount}
-                    date={testData[i].date}
-                />
-            ))} */}
             <AddTransaction updateList={getTransactions} />
-        </>
+        </div>
     );
 };
