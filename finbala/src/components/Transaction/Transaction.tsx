@@ -12,6 +12,12 @@ export const Transaction = (props: TransactionProp) => {
         setIsEditable(!isEditable);
     };
 
+    const [isModalHidden, setIsModalHidden] = useState<Boolean>(true);
+
+    const modalToggleHandler = () => {
+        setIsModalHidden(!isModalHidden);
+    };
+
     const deleteHandler = async () => {
         console.log(props._id);
         await axios.delete(`http://localhost:3000/api/v1/stats/${props._id}`);
@@ -121,7 +127,9 @@ export const Transaction = (props: TransactionProp) => {
             </form>
 
             <button
-                className={"btn btn-primary m-2" + (isEditable ? " d-none" : "")}
+                className={
+                    "btn btn-primary m-2" + (isEditable ? " d-none" : "")
+                }
                 onClick={editableToggleHandler}
             >
                 Edit
@@ -135,10 +143,56 @@ export const Transaction = (props: TransactionProp) => {
             <button
                 type="button"
                 className="btn btn-danger m-2"
-                onClick={deleteHandler}
+                onClick={modalToggleHandler}
             >
-                X
+                 <span aria-hidden="true">&times;</span>
             </button>
+            <div
+                className={"modal" + (isModalHidden ? "" : " d-flex")}
+                tabIndex={-1}
+                role="dialog"
+            >
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title fs-5">Confirm Delete</h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={modalToggleHandler}
+                            >
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p>
+                                Are you sure you want to delete "
+                                {props.displayName}"?
+                            </p>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={deleteHandler}
+                            >
+                                Delete
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-dismiss="modal"
+                                onClick={modalToggleHandler}
+
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
