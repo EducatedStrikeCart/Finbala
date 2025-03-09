@@ -20,7 +20,7 @@ export const TransactionWindow = () => {
 
     return (
         <div className="bg-body-secondary rounded mx-5 p-3">
-            <div className="d-flex mx-5">
+            <div className="d-flex mx-5 text-white  border-bottom border-white">
                 <div className="p-2 col-2">Date</div>
                 <div className="p-2 col-2">Type</div>
                 <div className="p-2 col-2">Name</div>
